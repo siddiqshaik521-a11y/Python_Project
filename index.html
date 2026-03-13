@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Oscilloscope using Laptop Microphone</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 1. Hero Section -->
+    <header class="hero" id="hero">
+        <canvas id="waveform-bg"></canvas>
+        <div class="hero-content">
+            <h1 class="glitch" data-text="Python Oscilloscope">Python Oscilloscope<br><span class="subtitle-text">using Laptop Microphone</span></h1>
+            <p class="subtitle">Real-time audio waveform visualization using Python</p>
+            <a href="#overview" class="btn btn-primary">Explore Project <i class="fa-solid fa-arrow-down"></i></a>
+        </div>
+        <div class="scrolling-grid"></div>
+    </header>
+
+    <!-- 2. Project Overview -->
+    <section class="section" id="overview">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <div class="card glass-card">
+                <p>This project transforms a standard laptop into a functional digital oscilloscope. By capturing ambient sound signals through the laptop's built-in microphone, it provides real-time signal analysis capabilities typically reserved for specialized hardware.</p>
+                <p>The core engine uses Python to process the audio input stream precisely. Utilizing powerful libraries such as <strong>NumPy</strong> for numerical operations, <strong>SoundDevice</strong> for low-latency audio capture, and <strong>Matplotlib</strong> for high-speed rendering, the system displays dynamic waveforms mirroring professional oscilloscope equipment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. How It Works -->
+    <section class="section" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="block-diagram">
+                <div class="block-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-microphone"></i></div>
+                    <h3>Audio Input</h3>
+                    <p>Captures sound waves via laptop mic</p>
+                </div>
+                <div class="arrow"><i class="fa-solid fa-caret-right"></i></div>
+                <div class="block-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Signal Processing</h3>
+                    <p>Python parses frames with NumPy</p>
+                </div>
+                <div class="arrow"><i class="fa-solid fa-caret-right"></i></div>
+                <div class="block-card">
+                    <div class="icon-wrapper"><i class="fa-solid fa-wave-square"></i></div>
+                    <h3>Waveform Display</h3>
+                    <p>Real-time rendering on screen</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Technologies Used -->
+    <section class="section" id="technologies">
+        <div class="container">
+            <h2 class="section-title">Technologies Used</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <i class="fa-brands fa-python tech-icon"></i>
+                    <h3>Python</h3>
+                    <p>Core programming language</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fa-solid fa-square-root-variable tech-icon"></i>
+                    <h3>NumPy</h3>
+                    <p>Fast numerical processing arrays</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fa-solid fa-chart-line tech-icon"></i>
+                    <h3>Matplotlib</h3>
+                    <p>High-speed plot rendering</p>
+                </div>
+                <div class="tech-card">
+                    <i class="fa-solid fa-headphones tech-icon"></i>
+                    <h3>SoundDevice</h3>
+                    <p>Low-latency audio interface</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Features -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <i class="fa-solid fa-bolt text-neon-blue"></i>
+                    <div>
+                        <h4>Real-time waveform display</h4>
+                        <p>Instantaneous visual feedback with minimal processing delay.</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <i class="fa-solid fa-tower-broadcast text-neon-green"></i>
+                    <div>
+                        <h4>Live microphone input</h4>
+                        <p>Continuous audio stream capture straight from your device.</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <i class="fa-solid fa-wave-square text-neon-blue"></i>
+                    <div>
+                        <h4>Frequency visualization</h4>
+                        <p>Observe amplitude and frequency variations dynamically.</p>
+                    </div>
+                </li>
+                <li class="feature-item">
+                    <i class="fa-solid fa-wallet text-neon-green"></i>
+                    <div>
+                        <h4>Low-cost alternative</h4>
+                        <p>No extra hardware required; a budget-friendly testing solution.</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 6. Applications -->
+    <section class="section" id="applications">
+        <div class="container">
+            <h2 class="section-title">Applications</h2>
+            <div class="app-grid">
+                <div class="app-card glass-card">
+                    <div class="app-icon"><i class="fa-solid fa-music"></i></div>
+                    <h3>Audio Signal Testing</h3>
+                </div>
+                <div class="app-card glass-card">
+                    <div class="app-icon"><i class="fa-solid fa-plug"></i></div>
+                    <h3>Basic Electronics Experiments</h3>
+                </div>
+                <div class="app-card glass-card">
+                    <div class="app-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <h3>Educational Demonstration</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Code Section -->
+    <section class="section" id="code">
+        <div class="container">
+            <h2 class="section-title">Implementation</h2>
+            <div class="code-window">
+                <div class="code-header">
+                    <div class="dots">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                    <div class="title">oscilloscope.py</div>
+                </div>
+                <pre><code class="language-python">
+import sounddevice as sd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# Parameters
+FS = 44100       # Sample rate
+CHUNK = 1024     # Number of frames per buffer
+DURATION = 0.05  # Time scale of window
+
+# Setup plot
+fig, ax = plt.subplots()
+x = np.linspace(0, DURATION, int(FS * DURATION))
+line, = ax.plot(x, np.zeros(len(x)), color='#00ff41')
+
+ax.set_ylim(-1, 1)
+ax.set_xlim(0, DURATION)
+fig.patch.set_facecolor('#0d1117')
+ax.set_facecolor('#0d1117')
+ax.axis('off')
+
+def audio_callback(indata, frames, time, status):
+    global plot_data
+    # Grab the latest chunk
+    plot_data = indata[:, 0]
+
+def update(frame):
+    # Update line data
+    line.set_ydata(plot_data)
+    return line,
+
+# Start stream & animation
+stream = sd.InputStream(samplerate=FS, channels=1, callback=audio_callback)
+ani = FuncAnimation(fig, update, interval=30, blit=True)
+
+with stream:
+    plt.show()
+                </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Output Section -->
+    <section class="section" id="output">
+        <div class="container">
+            <h2 class="section-title">Output Demonstration</h2>
+            <div class="output-container glass-card">
+                <div class="oscilloscope-screen">
+                    <div class="grid-overlay"></div>
+                    <canvas id="output-canvas"></canvas>
+                    <div class="screen-glare"></div>
+                </div>
+                <p class="caption">Simulated display of vocal audio input</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Future Improvements -->
+    <section class="section" id="future">
+        <div class="container">
+            <h2 class="section-title">Future Improvements</h2>
+            <div class="future-cards">
+                <div class="card glowing-border">
+                    <h3>FFT Spectrum</h3>
+                    <p>Real-time frequency domain analysis</p>
+                </div>
+                <div class="card glowing-border">
+                    <h3>Trigger Mode</h3>
+                    <p>Stabilize repeating waveforms</p>
+                </div>
+                <div class="card glowing-border">
+                    <h3>Signal Recording</h3>
+                    <p>Save captures to file for later analysis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">O-SCOPE</div>
+                <p>Made by ECE Student | Engineering Project</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
