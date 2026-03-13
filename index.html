@@ -207,12 +207,16 @@ with stream:
         <div class="container">
             <h2 class="section-title">Output Demonstration</h2>
             <div class="output-container glass-card">
+                <div class="controls-bar" style="margin-bottom: 1.5rem; display: flex; justify-content: center; gap: 1rem;">
+                    <button id="btn-mic-start" class="btn btn-primary"><i class="fa-solid fa-microphone"></i> Start Microphone</button>
+                    <button id="btn-mic-stop" class="btn btn-primary" style="display: none; border-color: #ff5f56; color: #ff5f56; box-shadow: 0 0 10px rgba(255, 95, 86, 0.3);"><i class="fa-solid fa-stop"></i> Stop Microphone</button>
+                </div>
                 <div class="oscilloscope-screen">
                     <div class="grid-overlay"></div>
                     <canvas id="output-canvas"></canvas>
                     <div class="screen-glare"></div>
                 </div>
-                <p class="caption">Simulated display of vocal audio input</p>
+                <p class="caption" id="output-caption">Simulated display of vocal audio input. Click "Start Microphone" for live input.</p>
             </div>
         </div>
     </section>

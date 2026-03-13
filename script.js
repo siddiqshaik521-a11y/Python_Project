@@ -58,10 +58,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Output Screen Waveform Animation ---
     const outCanvas = document.getElementById('output-canvas');
+    const btnMicStart = document.getElementById('btn-mic-start');
+    const btnMicStop = document.getElementById('btn-mic-stop');
+    const outCaption = document.getElementById('output-caption');
+
     if(outCanvas) {
         const outCtx = outCanvas.getContext('2d');
         let outWidth, outHeight;
         let outPhase = 0;
+
+        let audioContext = null;
+        let analyser = null;
+        let dataArray = null;
+        let stream = null;
+        let isMicActive = false;
 
         function resizeOutCanvas() {
             // Parent dimensions
@@ -86,27 +96,46 @@ document.addEventListener('DOMContentLoaded', () => {
             outCtx.shadowColor = '#00ff41';
 
             const midY = outHeight / 2;
-            // Fewer points = a bit more jagged like a real fast scope
-            const points = outWidth / 2; 
-            
-            // Simulate voice wave (with some randomness)
-            let isSpeaking = Math.random() > 0.1; // 90% of time "speaking"
-            let targetAmplitude = isSpeaking ? (Math.random() * 0.5 + 0.3) * (outHeight * 0.4) : (outHeight * 0.05);
 
-            for(let i=0; i<points; i++) {
-                const x = (i / points) * outWidth;
-                // High frequency + low frequency + noise
-                let val = Math.sin(i * 0.2 + outPhase * 5) * 0.5 + 
-                          Math.sin(i * 0.05 - outPhase * 2) * 0.4 +
-                          (Math.random() - 0.5) * 0.15;
-                
-                // Envelope (Hanning window shape)
-                let envelope = Math.sin((i / points) * Math.PI); 
-                
-                const y = midY + (val * targetAmplitude * envelope);
+            if (isMicActive && analyser && dataArray) {
+                // Real microphone data
+                analyser.getByteTimeDomainData(dataArray);
+                const sliceWidth = outWidth * 1.0 / analyser.frequencyBinCount;
+                let x = 0;
 
-                if (i === 0) outCtx.moveTo(x, y);
-                else outCtx.lineTo(x, y);
+                for (let i = 0; i < analyser.frequencyBinCount; i++) {
+                    const v = dataArray[i] / 128.0;
+                    const y = (v * outHeight) / 2;
+
+                    if (i === 0) {
+                        outCtx.moveTo(x, y);
+                    } else {
+                        outCtx.lineTo(x, y);
+                    }
+                    x += sliceWidth;
+                }
+            } else {
+                // Simulate voice wave (with some randomness)
+                const points = outWidth / 2; 
+                let isSpeaking = Math.random() > 0.1; // 90% of time "speaking"
+                let targetAmplitude = isSpeaking ? (Math.random() * 0.5 + 0.3) * (outHeight * 0.4) : (outHeight * 0.05);
+
+                for(let i=0; i<points; i++) {
+                    const x = (i / points) * outWidth;
+                    // High frequency + low frequency + noise
+                    let val = Math.sin(i * 0.2 + outPhase * 5) * 0.5 + 
+                              Math.sin(i * 0.05 - outPhase * 2) * 0.4 +
+                              (Math.random() - 0.5) * 0.15;
+                    
+                    // Envelope (Hanning window shape)
+                    let envelope = Math.sin((i / points) * Math.PI); 
+                    
+                    const y = midY + (val * targetAmplitude * envelope);
+
+                    if (i === 0) outCtx.moveTo(x, y);
+                    else outCtx.lineTo(x, y);
+                }
+                outPhase += 0.08; // slightly faster
             }
             
             outCtx.stroke();
@@ -114,11 +143,55 @@ document.addEventListener('DOMContentLoaded', () => {
             // Reset shadow to avoid affecting the clear rect on next tick
             outCtx.shadowBlur = 0;
 
-            outPhase += 0.08; // slightly faster
             requestAnimationFrame(drawOutputWaveform);
         }
 
         drawOutputWaveform();
+
+        // Microphone Button Handlers
+        if (btnMicStart && btnMicStop) {
+            btnMicStart.addEventListener('click', async () => {
+                try {
+                    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    analyser = audioContext.createAnalyser();
+                    const source = audioContext.createMediaStreamSource(stream);
+                    
+                    source.connect(analyser);
+                    analyser.fftSize = 2048;
+                    const bufferLength = analyser.frequencyBinCount;
+                    dataArray = new Uint8Array(bufferLength);
+                    
+                    isMicActive = true;
+                    btnMicStart.style.display = 'none';
+                    btnMicStop.style.display = 'block';
+                    if (outCaption) {
+                        outCaption.textContent = 'Live microphone input active. Speak or make noise!';
+                        outCaption.style.color = 'var(--neon-green)';
+                    }
+                } catch (err) {
+                    console.error('Error accessing microphone:', err);
+                    alert('Could not access microphone. Please allow microphone permissions.');
+                }
+            });
+
+            btnMicStop.addEventListener('click', () => {
+                isMicActive = false;
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                }
+                if (audioContext) {
+                    audioContext.close();
+                }
+                
+                btnMicStart.style.display = 'block';
+                btnMicStop.style.display = 'none';
+                if (outCaption) {
+                    outCaption.textContent = 'Simulated display of vocal audio input. Click "Start Microphone" for live input.';
+                    outCaption.style.color = 'var(--text-muted)';
+                }
+            });
+        }
     }
 
     // --- Simple Code Highlighting Script ---
